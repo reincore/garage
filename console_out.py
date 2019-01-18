@@ -9,14 +9,17 @@ class ConsoleWriter(object):
 	"""
 	def __init__(self):
 		super(ConsoleWriter, self).__init__()
-		self.DatabaseClient = DatabaseClient()
-		self.data = self.DatabaseClient.read_local_data()
+		self.Presenter = Presenter()
 
 	def begin_query(self):
-		print("Please enter a number from 1-5!: ")
-		entry = input()
-		print("Entry is: ", entry)
-		print(self.data)
+		print("Please enter a number from 1-4!: ")
+		entry = str(raw_input())
+		isEntryAccepted = self.Presenter.handle_user_input(entry)
+
+		if not isEntryAccepted:
+			self.begin_query()
+		else: 
+			print ("Currently this is it... Success!")
 
 
 if __name__ == '__main__':
