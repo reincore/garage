@@ -3,6 +3,7 @@
 
 from lib.console_out import *
 
+
 class ConsoleApp(object):
 	"""
 	Initializer class to start the console app

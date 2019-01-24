@@ -6,6 +6,7 @@ from lib.console_out import *
 from lib.entity import *
 import sys
 
+
 class Presenter(object):
 	"""
 	This class contains the methods to get and set garage service data,
@@ -68,12 +69,44 @@ class Presenter(object):
 		# Check the board display
 		# empty_slot = self.check_board()
 
+		# Check license plate validity
+		self.validate_license_plate(license_plate)
+
 		# Add new car to the car list
 		self.add_new_car(new_vehicle)
 
 		# Place new car in the nearest available garage slot
 		parked_garage = self.navigate_new_car(new_vehicle)
 		return parked_garage
+
+	def validate_license_plate(self, license_plate):
+		ALPHABET = "ABCDEFGHIJKLMNOPRSTUVYZ"
+
+		try:
+			# License plate is valid if length is between 6 - 10
+			# and if the 3rd and 4th characters are alphabetic,
+			# and if the last 3 characters are numeric
+
+			is_length_valid = (6 < len(license_plate) < 10)
+			is_beginning_valid = (license_plate[:2] != "00")
+			is_middle_chars_valid = (any(c.isalpha() for c in license_plate[2:4]))
+			is_ending_valid = not (any(c.isalpha() for c in license_plate[-3:]))
+
+			if (is_length_valid 
+				and is_beginning_valid 
+				and is_middle_chars_valid 
+				and is_ending_valid):
+				print("License plate is valid! Success...")
+				is_license_plate_valid = True
+
+			else: 
+				is_license_plate_valid = False
+				
+		except ValueError:
+			is_license_plate_valid = False
+
+		if not is_license_plate_valid:
+			print("Error: license plate is not correct, you must enter a valid license plate!")
 		
 
 	

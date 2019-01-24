@@ -3,6 +3,7 @@
 
 import json
 
+
 class DatabaseClient(object):
 	"""
 	This class contains the methods to read data from database 

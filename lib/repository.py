@@ -2,6 +2,7 @@
 #-*- encoding: utf-8 -*-
 
 from lib.file_client import *
+from lib.entity import *
 
 
 class Repository(object):
@@ -15,6 +16,7 @@ class Repository(object):
 		self.board_repo = None
 
 		self.file_client = DatabaseClient()
+		self.entity = Entity()
 
 	# Getter & Setter methods
 	def get_garage_repo(self):

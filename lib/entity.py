@@ -1,7 +1,6 @@
 #!/usr/bin/python
 #-*- encoding: utf-8 -*-
 
-
 class Entity(object):
 	"""
 	This class contains two lists, namely garage and vehicle as fields.
@@ -11,7 +10,7 @@ class Entity(object):
 		super(Entity, self).__init__()
 		self.garage = []
 		self.vehicle = []
-		self.board = None
+		self.board = []
 
 	def get_garage(self):
 		return self.garage
@@ -37,5 +36,4 @@ class Entity(object):
 		return self.board
 
 	def set_board_data(self):
-
 		pass
