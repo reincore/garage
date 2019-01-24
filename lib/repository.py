@@ -14,16 +14,29 @@ class Repository(object):
 		self.garage_repo = None
 		self.board_repo = None
 
-	# Getter methods
+		self.file_client = DatabaseClient()
+
+	# Getter & Setter methods
 	def get_garage_repo(self):
 		pass
 
 	def get_board_repo(self):
-		pass
+		return self.file_client.get_board_data()
 
-	# Setter methods
 	def set_garage_repo(self, data):
 		pass
 
 	def set_board_repo(self, data):
+		pass
+
+	# Repository methods
+	def get_garage_data(self):
+		garage_data = self.file_client.get_garage_data()
+		if garage_data:
+			return garage_data
+		else:
+			print("File empty!")
+			return None
+
+	def set_file_client_data(self, data):
 		pass
