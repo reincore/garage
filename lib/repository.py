@@ -23,10 +23,10 @@ class Repository(object):
 	def get_board_repo(self):
 		return self.file_client.get_board_data()
 
-	def set_garage_repo(self, data):
+	def set_garage_repo(self, garage_data):
 		pass
 
-	def set_board_repo(self, data):
+	def set_board_repo(self, board_data):
 		pass
 
 	# Repository methods

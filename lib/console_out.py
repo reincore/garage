@@ -71,10 +71,12 @@ class ConsoleWriter(object):
 			color = str(input())
 
 			# Add new car to the car list
-			self.presenter.handle_new_car(license_plate, brand, model, year, color)
-			print(f"Location of {brand} {model} {license_plate} is Garage 1.")
-
+			parked_garage = self.presenter.handle_new_car(license_plate, brand, model, year, color)
+			
 			### Make a call to Presenter to obtain board data ###
+
+			print(f"Location of {brand} {model} {license_plate} is {parked_garage}.")
+
 			self.print_board_content()
 		
 		elif entry == "2":

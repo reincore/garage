@@ -2,7 +2,6 @@
 #-*- encoding: utf-8 -*-
 
 from lib.console_out import *
-import time
 
 class ConsoleApp(object):
 	"""

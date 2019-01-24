@@ -27,6 +27,7 @@ class Service(object):
 		return self.repository.get_board_repo()
 
 	def set_board_service(self, board_service_data):
+		# self.repository.set_board_repo(board_service_data)
 		pass
 
 	# Service methods

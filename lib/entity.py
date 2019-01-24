@@ -32,4 +32,10 @@ class Entity(object):
 		# license_plate, brand, model, year and color
 
 		self.vehicle.append(new_vehicle_data)
-		print("{0} appended to the end of Vehicle list!".format(new_vehicle_data))
+
+	def get_board_data(self):
+		return self.board
+
+	def set_board_data(self):
+
+		pass
