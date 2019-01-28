@@ -38,11 +38,11 @@ class ConsoleWriter(object):
 
 	def verify_user_input(self, entry):
 		if entry in self.accepted_user_entries:
-			print(f"Entry is: {entry} and it is of accepted format" )
+			print(f"Entry is: {entry} and it is of accepted format")
 			self.handle_user_input(entry)
 
 		else:
-			print(f"Entry is: {entry} and it is NOT of accepted format" )
+			print(f"Entry is: {entry} and it is NOT of accepted format")
 			return False
 
 	def print_board_content(self):
@@ -71,7 +71,10 @@ class ConsoleWriter(object):
 			color = str(input())
 
 			# Add new car to the car list
-			parked_garage = self.presenter.handle_new_car(license_plate, brand, model, year, color)
+			is_car_data_valid, parked_garage = self.presenter.handle_new_car(license_plate, brand, model, year, color)
+
+			if not is_car_data_valid:
+				return
 			
 			### Make a call to Presenter to obtain board data ###
 

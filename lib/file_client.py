@@ -32,8 +32,18 @@ class DatabaseClient(object):
 		else:
 			return ""
 
-	def write_local_data(self, output_file_name):
-		pass
+	def set_garage_data(self, garage_data, output_file_name="garage.txt"):
+		"""
+		This method writes the new garage.txt file data. Supposedly, there 
+		are three garage entries, each having a name, capacity and availability value.
+		"""
+		file_path = "data/" + str(output_file_name)
+		try:
+			with open(file_path, 'w') as output_file:
+				json.dump(garage_data, output_file)
+		except ValueError as e:
+			raise Exception("The file '{0}' could not be written! Please check its file extension and file content.")
+
 
 	def get_board_data(self, input_file_name="garage.txt"):
 		"""

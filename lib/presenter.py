@@ -20,14 +20,15 @@ class Presenter(object):
 
 	# Getter & Setter methods
 	def get_garage_service(self):
-		garage_file_data = self.service.get_garage_repo()
+		garage_file_data, self.entity = self.service.get_garage_repo()
 		if garage_file_data:
-			return garage_file_data
+			return garage_file_data, self.entity.garage
 		else:
 			return None
 
 	def get_board_content(self):
-		return self.service.get_board_service()
+		board_data = self.service.get_board_service()
+		return board_data
 
 	def set_garage_service(self, data):
 		pass
@@ -38,13 +39,13 @@ class Presenter(object):
 
 	# Logic
 	def add_new_car(self, new_vehicle_data):
-		self.entity.add_vehicle(new_vehicle_data)
+		self.entity.vehicle = self.service.add_vehicle(new_vehicle_data)
+		return self.entity.vehicle
 
 	def remove_car(self, license_plate):
 		pass
 
 	def navigate_new_car(self, new_vehicle):
-		# This should be changed to entity
 		board_content = self.get_board_content()
 		target_garage = ""
 
@@ -60,43 +61,51 @@ class Presenter(object):
 	def handle_new_car(self, license_plate, brand, model, year, color):
 		new_vehicle = {
 		"id": license_plate, 
-		"brand": brand, 
-		"model": model, 
+		"brand": brand,
+		"model": model,
 		"year": year, 
 		"color": color
 		}
 
-		# Check the board display
-		# empty_slot = self.check_board()
-
 		# Check license plate validity
-		self.validate_license_plate(license_plate)
+		is_license_plate_valid = self.validate_license_plate(license_plate)
+		if not is_license_plate_valid:
+			return False, None
 
 		# Add new car to the car list
-		self.add_new_car(new_vehicle)
+		vehicle_list = self.add_new_car(new_vehicle)
+		print("Vehicle list is: ")
+		print(vehicle_list)
+		print("Garage list is: ")
+		print(self.entity.garage)
 
 		# Place new car in the nearest available garage slot
 		parked_garage = self.navigate_new_car(new_vehicle)
-		return parked_garage
+		return True, parked_garage
 
 	def validate_license_plate(self, license_plate):
-		ALPHABET = "ABCDEFGHIJKLMNOPRSTUVYZ"
+		ALPHABET = "abcdefghijklmnoprstuvyzABCDEFGHIJKLMNOPRSTUVYZ"
+		NUMBERS = "0123456789"
 
 		try:
-			# License plate is valid if length is between 6 - 10
-			# and if the 3rd and 4th characters are alphabetic,
-			# and if the last 3 characters are numeric
-
+			city_code = int(license_plate[:2])
 			is_length_valid = (6 < len(license_plate) < 10)
-			is_beginning_valid = (license_plate[:2] != "00")
-			is_middle_chars_valid = (any(c.isalpha() for c in license_plate[2:4]))
-			is_ending_valid = not (any(c.isalpha() for c in license_plate[-3:]))
+
+			# City code is between 0 and 81 and first two characters are not alphabetical
+			is_beginning_valid = ((0 < city_code < 81)
+				and not (any(c.isalpha() for c in license_plate[0:2])))
+
+			# Middle characters (index 3 and 4) are alphabetical
+			is_middle_chars_valid = (all(c.isalpha() for c in license_plate[2:4]))
+
+			# Last 3 characters are numerical and -5th character is not numerical
+			is_ending_valid = (all(c in NUMBERS for c in license_plate[-3:]) 
+				and not (license_plate[-5] in NUMBERS))
 
 			if (is_length_valid 
 				and is_beginning_valid 
 				and is_middle_chars_valid 
 				and is_ending_valid):
-				print("License plate is valid! Success...")
 				is_license_plate_valid = True
 
 			else: 
@@ -106,7 +115,7 @@ class Presenter(object):
 			is_license_plate_valid = False
 
 		if not is_license_plate_valid:
-			print("Error: license plate is not correct, you must enter a valid license plate!")
-		
+			print("Error: license plate is not correct, you must enter a valid license plate!")		
+		return is_license_plate_valid
 
 	

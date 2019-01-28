@@ -20,20 +20,27 @@ class Entity(object):
 		print("{0} appended to the end of Garage list!".format(new_garage))
 
 	def get_vehicle(self, license_plate):
-		# Entered license plate is matched with a car from the car list and is returned
-
-		for car in self.vehicle:
-			if license_plate in car:
-				return car
+		return self.vehicle
 
 	def add_vehicle(self, new_vehicle_data):
 		# Received parameter is a dictionary that contains the:
 		# license_plate, brand, model, year and color
+		# Adds the vehicle to the list and returns the updated vehicle list.
 
 		self.vehicle.append(new_vehicle_data)
+		return self.vehicle
+
+	def remove_vehicle(self, vehicle_data):
+		# Received parameter is a dictionary that contains the:
+		# license_plate, brand, model, year and color
+		# Removes the vehicle from list and returns the updated vehicle list.
+
+		self.vehicle.remove(vehicle_data)
+		return self.vehicle
 
 	def get_board_data(self):
 		return self.board
 
-	def set_board_data(self):
-		pass
+	def set_board_data(self, board_data):
+		self.board = board_data
+		return self.board
