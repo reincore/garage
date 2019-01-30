@@ -34,8 +34,8 @@ class Presenter(object):
 		pass
 
 	def set_board_service(self, data):
-		 # self.service.set_board_service(data)
-		 pass
+		# self.service.set_board_service(data)
+		pass
 
 	# Logic
 	def add_new_car(self, new_vehicle_data):
@@ -96,11 +96,11 @@ class Presenter(object):
 				and not (any(c.isalpha() for c in license_plate[0:2])))
 
 			# Middle characters (index 3 and 4) are alphabetical
-			is_middle_chars_valid = (all(c.isalpha() for c in license_plate[2:4]))
+			is_middle_chars_valid = (all(c.isalpha() for c in license_plate[2:4])
+				and (license_plate[2] and license_plate[5] not in ALPHABET))
 
 			# Last 3 characters are numerical and -5th character is not numerical
-			is_ending_valid = (all(c in NUMBERS for c in license_plate[-3:]) 
-				and not (license_plate[-5] in NUMBERS))
+			is_ending_valid = (all(c in NUMBERS for c in license_plate[-3:])) and not (license_plate[-5] in NUMBERS) and (int(license_plate[-3:]) > 0)
 
 			if (is_length_valid 
 				and is_beginning_valid 
@@ -111,7 +111,7 @@ class Presenter(object):
 			else: 
 				is_license_plate_valid = False
 				
-		except ValueError:
+		except (ValueError, IndexError) as e:
 			is_license_plate_valid = False
 
 		if not is_license_plate_valid:
